@@ -1,6 +1,5 @@
 require("dotenv").config();
 const express = require("express");
-const app = express();
 const sequelize = require("./db");
 const models = require("./models/models");
 const cors = require("cors");
@@ -9,14 +8,11 @@ const errorHandler = require("./middleware/ErrorHandlingMiddleware");
 
 const PORT = process.env.PORT;
 
+const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/api", router);
 app.use(errorHandler);
-
-app.get("/", (req, res) => {
-  res.status(200).json({ message: "Working!" });
-});
 
 const start = async () => {
   try {

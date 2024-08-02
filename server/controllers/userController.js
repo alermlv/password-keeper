@@ -1,6 +1,6 @@
 const ApiError = require("../error/ApiError");
 
-class userController {
+class UserController {
   async registration(req, res) {
 
   }
@@ -18,4 +18,4 @@ class userController {
   }
 }
 
-module.exports = new userController();
+module.exports = new UserController();
