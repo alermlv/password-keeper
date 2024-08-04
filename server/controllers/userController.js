@@ -1,13 +1,7 @@
 const ApiError = require("../error/ApiError");
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const { User, Password } = require("../models/models");
-
-const generateJwt = (id, email, role) => {
-  return jwt.sign({ id, email, role }, process.env.SECRET_KEY, {
-    expiresIn: "24h",
-  });
-};
+const generateJwt = require("../functions/generateJwt");
+const { User, Record } = require("../models/models");
 
 class UserController {
   async registration(req, res, next) {
@@ -27,7 +21,7 @@ class UserController {
 
     const hashPassword = await bcrypt.hash(password, 5);
     const user = await User.create({ email, password: hashPassword, role });
-    const token = await generateJwt(user.id, user.email, user.role);
+    const token = generateJwt(user.id, user.email, user.role);
 
     return res.json({ token });
   }
@@ -59,7 +53,7 @@ class UserController {
 
   async delete(req, res) {
     const { id } = req.params;
-    await Password.destroy({ where: { userId: id } });
+    await Record.destroy({ where: { userId: id } });
     await User.destroy({ where: { id } });
     res.status(200).json();
   }

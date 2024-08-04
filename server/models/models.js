@@ -8,7 +8,7 @@ const User = sequelize.define("user", {
   role: { type: DataTypes.STRING, defaultValue: "USER" },
 });
 
-const Password = sequelize.define("password", {
+const Record = sequelize.define("record", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   title: { type: DataTypes.STRING },
   website: { type: DataTypes.STRING, allowNull: false },
@@ -16,7 +16,7 @@ const Password = sequelize.define("password", {
   password: { type: DataTypes.STRING, allowNull: false },
 });
 
-User.hasMany(Password);
-Password.belongsTo(User);
+User.hasMany(Record);
+Record.belongsTo(User);
 
-module.exports = { User, Password };
+module.exports = { User, Record };
